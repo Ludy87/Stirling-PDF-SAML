@@ -178,3 +178,4 @@ scripts/*
 *.p12
 *.pem
 *.sh
+test/*
