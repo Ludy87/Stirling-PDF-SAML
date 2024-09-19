@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -99,10 +100,10 @@ public class ConfigInitializer
             tempSettingFile.setHeader(header);
 
             // Get all keys from the template
-            List<String> keys =
+            List<String> settingsTemplateKeys =
                     Arrays.asList(settingsTemplateFile.getKeys(true).toArray(new String[0]));
 
-            for (String key : keys) {
+            for (String key : settingsTemplateKeys) {
                 if (!key.contains(".")) {
                     // Add blank lines and comments to specific sections
                     tempSettingFile
@@ -114,6 +115,16 @@ public class ConfigInitializer
                 // Copy settings from the template to the settings.yml file
                 changeConfigItemFromCommentToKeyValue(
                         settingsTemplateFile, settingsFile, tempSettingFile, key);
+            }
+            List<String> settingsFileKeys =
+                    Arrays.asList(settingsFile.getKeys(true).toArray(new String[0]));
+
+            List<String> fileOnlyKeys = new ArrayList<>(settingsFileKeys);
+            fileOnlyKeys.removeAll(settingsTemplateKeys);
+
+            // Removes obsolete keys from settings.yml
+            for (String key : fileOnlyKeys) {
+                tempSettingFile.path(key).set(null);
             }
 
             // Save the settings.yml file

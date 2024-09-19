@@ -252,9 +252,8 @@ public class ApplicationProperties {
         @Data
         public static class SAML {
             private Boolean enabled = false;
-            private String methode;
             private String entityId;
-            private String registrationId;
+            private final String registrationId = "stirling_pdf_saml2";
             private String spBaseUrl;
             private String idpMetadataLocation;
             private KeyStore keystore;
