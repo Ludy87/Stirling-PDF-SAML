@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}" xmlns:th="https://www.thymeleaf.org">
+  <head>
+  <th:block th:insert="~{fragments/common :: head(title=#{adminUserSettings.title}, header=#{adminUserSettings.header})}"></th:block>
+    <style>
+      .active-user {
+        color: green;
+        text-shadow: 0 0 5px green;
+      }
+
+      .text-overflow {
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow:ellipsis;
+      }
+    </style>
+  </head>
+
+  <body>
+    <th:block th:insert="~{fragments/common :: game}"></th:block>
+    <div id="page-container">
+      <div id="content-wrap">
+        <th:block th:insert="~{fragments/navbar.html :: navbar}"></th:block>
+        <br><br>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-9 bg-card">
+              <div class="tool-header">
+                <span class="material-symbols-rounded tool-header-icon organize">manage_accounts</span>
+                <span class="tool-header-text" th:text="#{adminUserSettings.header}">Admin User Control Settings</span>
+              </div>
+
+              <!-- User Settings Title -->
+              <div style="background: var(--md-sys-color-outline-variant);padding: .8rem; margin: 10px 0; border-radius: 2rem; text-align: center;">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#addUserModal" class="btn btn-outline-success" th:title="#{adminUserSettings.addUser}">
+                  <span class="material-symbols-rounded">person_add</span>
+                  <span th:text="#{adminUserSettings.addUser}">Add New User</span>
+                </a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#changeUserRoleModal" class="btn btn-outline-success" th:title="#{adminUserSettings.changeUserRole}">
+                  <span class="material-symbols-rounded">edit</span>
+                  <span th:text="#{adminUserSettings.changeUserRole}">Change User's Role</span>
+                </a>
+                <div class="my-4">
+                  <p>AppName: <span th:text="${app_name}"></span></p>
+                  <table>
+                    <tr th:each="setting : ${settings}">
+                      <td th:text="${setting.key}"></td>
+                      <td th:text="${setting.value}"></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="bg-card mt-3 mb-3">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <th:block th:insert="~{fragments/footer.html :: footer}"></th:block>
+    </div>
+  </body>
+</html>
