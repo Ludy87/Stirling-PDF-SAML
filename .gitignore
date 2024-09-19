@@ -179,3 +179,5 @@ scripts/*
 *.pem
 *.sh
 test/*
+**/test/**
+*.md
