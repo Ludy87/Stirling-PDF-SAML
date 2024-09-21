@@ -180,7 +180,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="mb-3" th:each="provider : ${providerlist}">
+            <div th:if="${oAuth2Enabled}" class="mb-3" th:each="provider : ${providerlist}">
               <a th:href="@{|/oauth2/authorization/${provider.key}|}" th:text="${provider.value}" class="w-100 btn btn-lg btn-primary">OpenID Connect</a>
             </div>
             <div class="mb-3" th:if="${samlEnabled}">
