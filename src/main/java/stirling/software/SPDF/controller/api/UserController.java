@@ -31,6 +31,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import stirling.software.SPDF.config.security.UserService;
+import stirling.software.SPDF.config.security.saml.ScimSaml2AuthenticatedPrincipal;
 import stirling.software.SPDF.config.security.session.SessionPersistentRegistry;
 import stirling.software.SPDF.model.AuthenticationType;
 import stirling.software.SPDF.model.Role;
@@ -336,6 +337,10 @@ public class UserController {
                     userNameP = ((UserDetails) principal).getUsername();
                 } else if (principal instanceof OAuth2User) {
                     userNameP = ((OAuth2User) principal).getName();
+                } else if (principal instanceof ScimSaml2AuthenticatedPrincipal) {
+                    ScimSaml2AuthenticatedPrincipal authenticatedPrincipal =
+                            (ScimSaml2AuthenticatedPrincipal) principal;
+                    userNameP = authenticatedPrincipal.getName();
                 } else if (principal instanceof String) {
                     userNameP = (String) principal;
                 }

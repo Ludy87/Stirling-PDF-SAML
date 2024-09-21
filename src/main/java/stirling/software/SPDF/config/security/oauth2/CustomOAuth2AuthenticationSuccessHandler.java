@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import stirling.software.SPDF.config.security.LoginAttemptService;
 import stirling.software.SPDF.config.security.UserService;
+import stirling.software.SPDF.config.security.saml.ScimSaml2AuthenticatedPrincipal;
 import stirling.software.SPDF.model.ApplicationProperties;
 import stirling.software.SPDF.model.ApplicationProperties.Security.OAUTH2;
 import stirling.software.SPDF.model.AuthenticationType;
@@ -48,6 +49,10 @@ public class CustomOAuth2AuthenticationSuccessHandler
         if (principal instanceof OAuth2User) {
             OAuth2User oauthUser = (OAuth2User) principal;
             username = oauthUser.getName();
+        } else if (principal instanceof ScimSaml2AuthenticatedPrincipal) {
+            ScimSaml2AuthenticatedPrincipal authenticatedPrincipal =
+                    (ScimSaml2AuthenticatedPrincipal) principal;
+            username = authenticatedPrincipal.getName();
         } else if (principal instanceof UserDetails) {
             UserDetails oauthUser = (UserDetails) principal;
             username = oauthUser.getUsername();

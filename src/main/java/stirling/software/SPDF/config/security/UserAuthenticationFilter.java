@@ -24,6 +24,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import stirling.software.SPDF.config.security.saml.ScimSaml2AuthenticatedPrincipal;
 import stirling.software.SPDF.config.security.session.SessionPersistentRegistry;
 import stirling.software.SPDF.model.ApiKeyAuthenticationToken;
 import stirling.software.SPDF.model.User;
@@ -109,6 +110,8 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
                 username = ((UserDetails) principal).getUsername();
             } else if (principal instanceof OAuth2User) {
                 username = ((OAuth2User) principal).getName();
+            } else if (principal instanceof ScimSaml2AuthenticatedPrincipal) {
+                username = ((ScimSaml2AuthenticatedPrincipal) principal).getName();
             } else if (principal instanceof String) {
                 username = (String) principal;
             }

@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
+import stirling.software.SPDF.config.security.saml.ScimSaml2AuthenticatedPrincipal;
 import stirling.software.SPDF.model.SessionEntity;
 
 @Component
@@ -50,6 +51,10 @@ public class SessionPersistentRegistry implements SessionRegistry {
             principalName = ((UserDetails) principal).getUsername();
         } else if (principal instanceof OAuth2User) {
             principalName = ((OAuth2User) principal).getName();
+        } else if (principal instanceof ScimSaml2AuthenticatedPrincipal) {
+            ScimSaml2AuthenticatedPrincipal authenticatedPrincipal =
+                    (ScimSaml2AuthenticatedPrincipal) principal;
+            principalName = authenticatedPrincipal.getName();
         } else if (principal instanceof String) {
             principalName = (String) principal;
         }
@@ -79,6 +84,10 @@ public class SessionPersistentRegistry implements SessionRegistry {
             principalName = ((UserDetails) principal).getUsername();
         } else if (principal instanceof OAuth2User) {
             principalName = ((OAuth2User) principal).getName();
+        } else if (principal instanceof ScimSaml2AuthenticatedPrincipal) {
+            ScimSaml2AuthenticatedPrincipal authenticatedPrincipal =
+                    (ScimSaml2AuthenticatedPrincipal) principal;
+            principalName = authenticatedPrincipal.getName();
         } else if (principal instanceof String) {
             principalName = (String) principal;
         }
