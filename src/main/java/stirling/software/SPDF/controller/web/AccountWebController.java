@@ -104,6 +104,9 @@ public class AccountWebController {
                 case "oauth2AuthenticationError":
                     error = "userAlreadyExistsOAuthMessage";
                     break;
+                case "saml2AuthenticationError":
+                    error = "saml2AuthenticationErrorMessage";
+                    break;
                 default:
                     break;
             }
